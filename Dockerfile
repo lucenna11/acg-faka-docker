@@ -11,11 +11,18 @@ RUN apt-get update && apt-get install -y \
     && docker-php-ext-configure gd --with-freetype --with-jpeg \
     && docker-php-ext-install -j$(nproc) gd pdo pdo_mysql zip sockets
 
+ENV TZ=Asia/Shanghai \
+    DEBIAN_FRONTEND=noninteractive
 
+RUN ln -fs /usr/share/zoneinfo/${TZ} /etc/localtime \
+    && echo ${TZ} > /etc/timezone \
+    && dpkg-reconfigure --frontend noninteractive tzdata \
+    && rm -rf /var/lib/apt/lists/*
+    
 COPY ./acg-faka /var/www/html
 RUN chown -R www-data:www-data /var/www/html
 
 
 
 # 保持官方默认启动命令
-CMD ["apache2-foreground"]
+RUN a2enmod rewrite
