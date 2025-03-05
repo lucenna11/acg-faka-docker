@@ -15,6 +15,7 @@ ENV TZ=Asia/Shanghai \
     DEBIAN_FRONTEND=noninteractive
 
 RUN { \
+ echo 'ServerName ip.gdbridg.com'; \
     echo '<Directory /var/www/html>'; \
     echo '  Options -Indexes +FollowSymLinks'; \
     echo '  AllowOverride All'; \
