@@ -15,8 +15,7 @@ RUN apt-get update && apt-get install -y \
 COPY acg-faka /var/www/html
 RUN chown -R www-data:www-data /var/www/html
 
-# 暴露端口
-EXPOSE 80
+
 
 # 保持官方默认启动命令
 CMD ["apache2-foreground"]
