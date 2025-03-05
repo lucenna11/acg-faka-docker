@@ -14,6 +14,16 @@ RUN apt-get update && apt-get install -y \
 ENV TZ=Asia/Shanghai \
     DEBIAN_FRONTEND=noninteractive
 
+RUN { \
+    echo '<Directory /var/www/html>'; \
+    echo '  Options -Indexes +FollowSymLinks'; \
+    echo '  AllowOverride All'; \
+    echo '  Require all granted'; \
+    echo '  DirectoryIndex index.php index.html'; \
+    echo '</Directory>'; \
+} >> /etc/apache2/apache2.conf
+
+
 RUN ln -fs /usr/share/zoneinfo/${TZ} /etc/localtime \
     && echo ${TZ} > /etc/timezone \
     && dpkg-reconfigure --frontend noninteractive tzdata \
@@ -21,7 +31,11 @@ RUN ln -fs /usr/share/zoneinfo/${TZ} /etc/localtime \
     
 COPY ./acg-faka /var/www/html
 
-
+RUN { \
+    echo 'display_errors = On'; \
+    echo 'display_startup_errors = On'; \
+    echo 'error_reporting = E_ALL'; \
+} > /usr/local/etc/php/conf.d/overrides.ini
 
 
 # 保持官方默认启动命令
