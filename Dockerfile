@@ -12,7 +12,7 @@ RUN apt-get update && apt-get install -y \
     && docker-php-ext-install -j$(nproc) gd pdo pdo_mysql zip sockets
 
 
-COPY acg-faka /var/www/html
+COPY ./acg-faka /var/www/html
 RUN chown -R www-data:www-data /var/www/html
 
 
