@@ -27,6 +27,5 @@ COPY ./acg-faka /var/www/html
 # 保持官方默认启动命令
 RUN a2enmod rewrite
 RUN chown -R www-data:www-data /var/www/html
-CMD ["apache2-foreground"]
 
 
